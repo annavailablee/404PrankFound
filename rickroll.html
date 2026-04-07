@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verifying...</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #0D0D0D;
+      color: white;
+      font-family: sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 🔄 Loading screen */
+    .loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #333;
+      border-top: 4px solid #8B47F5;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .text {
+      font-size: 18px;
+      color: #aaa;
+      letter-spacing: 0.5px;
+    }
+
+    /* 🎬 Video hidden initially */
+    #vid {
+      display: none; /* ❌ removed !important */
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #title {
+      display: none;
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.6);
+      color: white;
+      z-index: 10;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🧠 Fake loading -->
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+    <div class="text" id="loadingText">Verifying humanity...</div>
+  </div>
+
+  <div id="title">CONGRATULATIONS 🎉</div>
+
+  <!-- 🎶 The trap -->
+  <video id="vid" playsinline>
+    <source src="rickroll.mp4" type="video/mp4">
+  </video>
+
+  <script>
+    const messages = [
+      "Verifying humanity...",
+      "Checking if you're a robot 🤖",
+      "Analyzing mouse movements...",
+      "Cross-checking with NASA database...",
+      "Almost there...",
+      "Final verification..."
+    ];
+
+    let i = 0;
+    const textEl = document.getElementById("loadingText");
+
+    const interval = setInterval(() => {
+      i++;
+      if (i < messages.length) {
+        textEl.textContent = messages[i];
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      clearInterval(interval);
+
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("title").style.display = "block";
+
+      const vid = document.getElementById("vid");
+      vid.style.display = "block";
+
+      vid.muted = true;
+
+      vid.play().then(() => {
+        vid.muted = false;
+      }).catch(() => {
+        console.log("Autoplay blocked 😔");
+      });
+
+    }, 8000);
+  </script>
+
+</body>
+</html>

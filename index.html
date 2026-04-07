@@ -1156,13 +1156,12 @@ window.verifyStage4 = function() {
   // 😈 c3 must be last clicked
   const lastClicked = window._lastCheckedBox === 'c3';
 
-  if (allChecked && lastClicked) {
-    showToast('…fine. you win. 🧠');
+   if (allChecked && lastClicked) {
+    showToast('Login successful! 🎉');
 
-    // 🎉 go to success page
     setTimeout(() => {
-      window.location.href = "success.html";
-    }, 800);
+  renderSuccess();
+}, 1000);
 
   } else {
     shake(document.getElementById('captchaBox'));
@@ -1171,20 +1170,21 @@ window.verifyStage4 = function() {
 };
   // ── SUCCESS ──
   function renderSuccess() {
-    const content = document.getElementById('captchaContent');
-    content.innerHTML = `
-      <div class="success-screen">
-        <div class="success-icon">🎉</div>
-        <div class="success-title">You are (probably) human!</div>
-        <div class="success-sub">Congratulations on surviving 5 stages of completely reasonable security checks. Welcome back… we think.</div>
-        <button class="success-ok" onclick="doLogin()">Finally, Sign Me In</button>
+  const content = document.getElementById('captchaContent');
+  content.innerHTML = `
+    <div class="success-screen">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">You are (probably) human!</div>
+      <div class="success-sub">
+        Congratulations on surviving 5 stages of completely reasonable security checks.
       </div>
-    `;
-    spawnConfetti();
-  }
-
+      <button class="success-ok" onclick="doLogin()">Finally, Sign Me In</button>
+    </div>
+  `;
+  spawnConfetti();
+}
   window.doLogin = function() {
-  window.location.href = "success.html";
+  window.location.href = "rickroll.html";
 }
 
   function spawnConfetti() {
