@@ -87,11 +87,38 @@
   <div id="title">CONGRATULATIONS 🎉</div>
 
   <!-- 🎶 The trap -->
-  <video id="vid" playsinline>
+  <video id="vid" playsinline muted preload="auto">
     <source src="rickroll.mp4" type="video/mp4">
   </video>
 
   <script>
+    function showTapToPlay() {
+  const btn = document.createElement("button");
+  btn.textContent = "Tap to continue verification 😉";
+
+  Object.assign(btn.style, {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    padding: "16px 24px",
+    fontSize: "16px",
+    background: "#8B47F5",
+    color: "white",
+    border: "none",
+    borderRadius: "12px",
+    zIndex: "20"
+  });
+
+  document.body.appendChild(btn);
+
+  btn.onclick = () => {
+    const vid = document.getElementById("vid");
+    vid.muted = false;
+    vid.play();
+    btn.remove();
+  };
+}
     const messages = [
       "Verifying humanity...",
       "Checking if you're a robot 🤖",
@@ -118,17 +145,38 @@
       document.getElementById("title").style.display = "block";
 
       const vid = document.getElementById("vid");
-      vid.style.display = "block";
 
-      vid.muted = true;
+vid.style.display = "block";
 
-      vid.play().then(() => {
-        vid.muted = false;
-      }).catch(() => {
-        console.log("Autoplay blocked 😔");
-      });
+// ensure video is ready before playing
+vid.load();
+
+// start muted (required)
+vid.muted = true;
+
+// wait until video can actually play
+vid.oncanplay = () => {
+  vid.play().then(() => {
+
+    // 🎭 delay unmute (important)
+    setTimeout(() => {
+      vid.muted = false;
+    }, 1200);
+
+  }).catch(() => {
+    console.log("Autoplay failed");
+    showTapToPlay();
+  });
+};
 
     }, 8000);
+    function enableSoundOnTap() {
+  document.body.addEventListener("click", () => {
+    const vid = document.getElementById("vid");
+    vid.muted = false;
+    vid.play();
+  }, { once: true });
+}
   </script>
 
 </body>
