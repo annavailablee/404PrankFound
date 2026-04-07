@@ -22,13 +22,35 @@
     --success: #34C759;
   }
 
+  /* 🌙 DARK MODE VARIABLES */
+body.dark-mode {
+  --white: #0F0F14;
+  --black: #F5F5F7;
+
+  --gray: #1A1A22;
+  --gray2: #2A2A35;
+
+  --text-muted: #A1A1B5;
+
+  --purple: #8B47F5;
+  --purple-dark: #6B21E8;
+  --purple-light: #A678FF;
+  --purple-pale: #3A2A5E;
+}
+
   html, body {
     height: 100%;
     font-family: 'DM Sans', sans-serif;
     background: var(--white);
     overflow: hidden;
   }
-
+  body:has(#themeToggle:checked) {
+   --white: #0D0D0D;
+   --black: #FAFAFA;
+   --gray: #1A1A1A;
+   --gray2: #2A2A2A;
+   --text-muted: #B0A8C5;
+  }
   /* ── LAYOUT ── */
   .layout {
     display: grid;
@@ -76,36 +98,134 @@
   }
 
   .top-nav {
-    position: absolute;
-    top: 28px; left: 0; right: 0;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    padding: 0 52px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--black);
-  }
+  position: absolute;
+  top: 28px; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 0 52px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+}
 
-  .top-nav .lang {
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex; align-items: center; gap: 4px;
-  }
-  .top-nav .signin-link { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
-  .top-nav .register-btn {
-    margin-left: auto;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    border-radius: 999px;
-    padding: 8px 22px;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    letter-spacing: 0.03em;
-  }
+.top-nav .lang {
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.top-nav .signin-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}.l {
+  display: block;
+  margin-bottom: 1.5em;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.l {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 0.75em;
+  box-shadow: 0.125em 0.125em 0 0.125em rgba(0, 0, 0, 0.3) inset;
+  color: #fdea7b;
+  display: inline-flex;
+  align-items: center;
+  margin: auto;
+  padding: 0.15em;
+  width: 3em;
+  height: 1.5em;
+  transform: scale(0.9);
+  transition:
+    background-color 0.1s 0.3s ease-out,
+    box-shadow 0.1s 0.3s ease-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.l:before,
+.l:after {
+  content: "";
+  display: block;
+}
+
+.l:before {
+  background-color: #d7d7d7;
+  border-radius: 50%;
+  width: 1.2em;
+  height: 1.2em;
+  transition:
+    background-color 0.1s 0.3s ease-out,
+    transform 0.3s ease-out;
+  z-index: 1;
+}
+
+.l:after {
+  background:
+    linear-gradient(transparent 50%, rgba(0, 0, 0, 0.15) 0) 0 50% / 50% 100%,
+    repeating-linear-gradient(90deg, #bbb 0, #bbb, #bbb 20%, #999 20%, #999 40%)
+      0 50% / 50% 100%,
+    radial-gradient(circle at 50% 50%, #888 25%, transparent 26%);
+  background-repeat: no-repeat;
+  border: 0.25em solid transparent;
+  border-left: 0.4em solid #d8d8d8;
+  border-right: 0 solid transparent;
+  transition:
+    border-left-color 0.1s 0.3s ease-out,
+    transform 0.3s ease-out;
+  transform: translateX(-22.5%);
+  transform-origin: 25% 50%;
+  width: 1.2em;
+  height: 1em;
+  box-sizing: border-box;
+}
+/* Checked */
+.l:checked {
+  background-color: rgba(0, 0, 0, 0.45);
+  box-shadow: 0.125em 0.125em 0 0.125em rgba(0, 0, 0, 0.1) inset;
+}
+
+.l:checked:before {
+  background-color: currentColor;
+  transform: translateX(125%);
+}
+
+.l:checked:after {
+  border-left-color: currentColor;
+  transform: translateX(-2.5%) rotateY(180deg);
+}
+/* Other States */
+.l:focus {
+  /* Usually an anti-A11Y practice but set to remove an annoyance just for this demo */
+  outline: 0;
+}
+
+
+/* 🌗 Toggle placement */
+#themeToggle {
+  margin-left: auto;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+/* Register button stays same (no margin-left now) */
+.top-nav .register-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+}
 
   .form-area { max-width: 360px; width: 100%; }
 
@@ -133,7 +253,7 @@
     display: block;
   }
   .field::placeholder { color: var(--text-muted); }
-  .field:focus { border-color: var(--purple); background: white; }
+  .field:focus { border-color: var(--purple); background: var(--white); }
 
   .forgot {
     text-align: right;
@@ -385,7 +505,7 @@
 
   /* Stage 5: impossible */
   .impossible-task {
-    background: #fff8e1;
+    background: var(--gray);
     border: 2px solid #FFD600;
     border-radius: 12px;
     padding: 18px;
@@ -487,6 +607,7 @@
     <nav class="top-nav">
       <span class="lang">▾ English</span>
       <span class="signin-link">Sign In</span>
+      <input type="checkbox" id="themeToggle" class="l">
       <button class="register-btn">REGISTER</button>
     </nav>
 
